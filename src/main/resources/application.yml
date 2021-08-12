@@ -1,0 +1,8 @@
+micronaut:
+  application:
+    name: hello-kafka
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  topic:
+    status: 'status'

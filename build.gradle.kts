@@ -4,17 +4,20 @@
  * This generated file contains a sample Kotlin application project to get you started.
  */
 
-plugins {
+import com.google.protobuf.gradle.generateProtoTasks
+import com.google.protobuf.gradle.id
+import com.google.protobuf.gradle.plugins
+import com.google.protobuf.gradle.protobuf
+import com.google.protobuf.gradle.protoc
 
+plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.10"
     id("org.jetbrains.kotlin.kapt") version "1.4.10"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.10"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.4.10"
     id("io.micronaut.application") version "1.2.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
-
-    // Apply the application plugin to add support for building a CLI application.
-//    application
+    id("com.google.protobuf") version "0.8.13"
 }
 
 version = "0.2"
@@ -69,6 +72,32 @@ tasks {
     compileTestKotlin {
         kotlinOptions {
             jvmTarget = "11"
+        }
+    }
+}
+
+
+sourceSets {
+    main {
+        java {
+            srcDirs("build/generated/source/proto/main/grpc")
+            srcDirs("build/generated/source/proto/main/java")
+        }
+    }
+}
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:3.14.0" }
+    plugins {
+        id("grpc") {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.33.1"
+        }
+    }
+    generateProtoTasks {
+        all().forEach {
+            it.plugins {
+                id("grpc")
+            }
         }
     }
 }

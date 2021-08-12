@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "hello.kafka";
+option java_outer_classname = "Kafka";
+option objc_class_prefix = "HLW";
+
+package hello.kafka;
+
+service KafkaService {
+  rpc produceStatusEvent (StatusProduceRequest) returns (StatusProduceResponse) {}
+}
+
+message StatusProduceRequest{
+  int32 code = 1;
+  string alias = 2;
+  string desc = 3;
+}
+
+message StatusProduceResponse{
+  string message = 1;
+}
+
+message ErrorResponse {
+  int64 code = 1;
+  string description = 2;
+}
