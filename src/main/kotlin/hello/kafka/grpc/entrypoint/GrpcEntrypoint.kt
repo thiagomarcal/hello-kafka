@@ -28,7 +28,7 @@ class GrpcEntrypoint(private val producer: StatusProducer) : KafkaServiceGrpc.Ka
             val uuid = UUID.randomUUID()
             val statusMessage = StatusMessage(
                 key = uuid.toString(),
-                code = request.code.toInt(),
+                code = request.code,
                 alias = request.alias,
                 desc = request.desc
             )

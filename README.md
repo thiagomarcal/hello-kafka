@@ -15,5 +15,5 @@ Use Java11 with:
 
 Build and run project with:
 * Execute: ``docker-compose up -d``;
-* Execute: `` ./gradlew clean build``;
-* Execute: `` ./gradlew run``;
+* Execute: ``./gradlew clean build``;
+* Execute: ``./gradlew run``;
