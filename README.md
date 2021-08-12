@@ -5,7 +5,6 @@ Project is created with:
 * Kotlin;
 * Kafka;
 * GRPC;
-* BloomRPC;
 
 ## Setup
 To run this project:
