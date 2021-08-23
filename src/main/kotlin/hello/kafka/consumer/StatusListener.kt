@@ -7,7 +7,7 @@ import io.micronaut.configuration.kafka.annotation.Topic
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-@KafkaListener(offsetReset = OffsetReset.EARLIEST)
+@KafkaListener(offsetReset = OffsetReset.EARLIEST, groupId = "StatusListener")
 class StatusListener {
 
     companion object {
@@ -16,6 +16,6 @@ class StatusListener {
 
     @Topic("status")
     fun receive(@KafkaKey key: String, message: String) {
-        log.info("Status message Successfully received -> key: $key - msg: $message")
+        log.info("Status message Successfully consumed -> key: $key - msg: $message")
     }
 }

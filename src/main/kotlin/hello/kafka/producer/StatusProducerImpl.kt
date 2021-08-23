@@ -10,11 +10,12 @@ import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
 class StatusProducerImpl(
-    private val statusTopic: String,
+    @param:Named("statusTopic") private val statusTopic: String,
     private val objectMapperJSON: ObjectMapper,
     @KafkaClient private val producer: Producer<String, String>
 ) : StatusProducer {

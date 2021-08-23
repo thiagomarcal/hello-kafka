@@ -2,7 +2,13 @@ micronaut:
   application:
     name: hello-kafka
 kafka:
+  streams:
+    default:
+      auto.offset.reset: "earliest"
   bootstrap:
     servers: localhost:9092
+
+app:
   topic:
-    status: 'status'
+    status: "status"
+    status-stream-desc-out: "status-stream-desc-out"
