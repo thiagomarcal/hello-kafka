@@ -27,7 +27,7 @@ class StatusStream(
 
     @Singleton
     @Named("status-desc-count")
-    fun wordCountStream(builder: ConfiguredStreamBuilder): KStream<String, StatusMessage> {
+    fun statusDescStream(builder: ConfiguredStreamBuilder): KStream<String, StatusMessage> {
 
 
         val props = builder.configuration
