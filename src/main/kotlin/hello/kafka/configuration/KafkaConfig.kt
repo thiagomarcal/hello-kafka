@@ -8,7 +8,8 @@ import javax.inject.Named
 @Factory
 class KafkaConfig(
     @Property(name = "app.topic.status") val statusTopic: String,
-    @Property(name = "app.topic.status-stream-desc-out") val statusStreamDescOutTopic: String
+    @Property(name = "app.topic.status-stream-desc-out") val statusStreamDescOutTopic: String,
+    @Property(name = "app.topic.status-stream-split-out") val statusStreamSplitOutTopic: String
 ) {
 
     @Bean
@@ -21,5 +22,11 @@ class KafkaConfig(
     @Named("statusStreamDescOutTopic")
     fun statusStreamDescOutTopic(): String {
         return statusStreamDescOutTopic
+    }
+
+    @Bean
+    @Named("statusStreamSplitOutTopic")
+    fun statusStreamSplitOutTopic(): String {
+        return statusStreamSplitOutTopic
     }
 }

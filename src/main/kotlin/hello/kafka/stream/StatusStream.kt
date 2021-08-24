@@ -9,6 +9,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.Serdes
 import org.apache.kafka.streams.StreamsConfig
 import org.apache.kafka.streams.kstream.*
+import java.util.*
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -16,6 +17,7 @@ import javax.inject.Singleton
 class StatusStream(
     @param:Named("statusTopic") private val statusTopic: String,
     @param:Named("statusStreamDescOutTopic") private val statusStreamDescOutTopic: String,
+    @param:Named("statusStreamSplitOutTopic") private val statusStreamSplitOutTopic: String,
 ) {
 
     companion object {
@@ -47,7 +49,7 @@ class StatusStream(
             .mapValues { v -> jsonMapper.readValue(v, StatusMessage::class.java) }
 
         val groupedByWord: KTable<String, Long> = statusMessageStream
-            .flatMapValues { value -> value.desc.toLowerCase().split("\\W+") }
+            .flatMapValues { value -> value.desc.toLowerCase().split(" ") }
             .groupBy({_, desc -> desc }, Grouped.with(Serdes.String(), Serdes.String()))
             .count(Materialized.`as`(STATUS_DESC_STORE))
 
@@ -55,6 +57,12 @@ class StatusStream(
         groupedByWord
             .toStream()
             .to(statusStreamDescOutTopic, Produced.with(Serdes.String(), Serdes.Long()))
+
+
+        statusMessageStream
+            .flatMapValues { value -> value.desc.toLowerCase().split(" ") }
+            .to(statusStreamSplitOutTopic)
+
 
         return statusMessageStream;
 
