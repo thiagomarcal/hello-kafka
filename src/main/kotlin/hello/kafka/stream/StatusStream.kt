@@ -9,7 +9,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.Serdes
 import org.apache.kafka.streams.StreamsConfig
 import org.apache.kafka.streams.kstream.*
-import java.util.*
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -50,7 +49,7 @@ class StatusStream(
 
         val groupedByWord: KTable<String, Long> = statusMessageStream
             .flatMapValues { value -> value.desc.toLowerCase().split(" ") }
-            .groupBy({_, desc -> desc }, Grouped.with(Serdes.String(), Serdes.String()))
+            .groupBy({ _, desc -> desc }, Grouped.with(Serdes.String(), Serdes.String()))
             .count(Materialized.`as`(STATUS_DESC_STORE))
 
 
